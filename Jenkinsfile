@@ -36,7 +36,7 @@ pipeline {
                 sh 'ls -la target'
                 sh 'docker build -t khaliddinh/spring-mysql .'
                 sh 'docker network create test || echo "network exists" '
-                sh 'docker container run -d --name khalid-java --network test -p 8080:8080 khaliddinh/spring-mysql'
+                sh 'docker container run -d --name khalid-java --network test -p 8081:8080 khaliddinh/spring-mysql'
             }
         }
         // stage('Pushing  to DockerHub') {
