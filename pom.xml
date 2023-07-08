@@ -9,12 +9,12 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>accessing-data-mysql-complete</artifactId>
+	<artifactId>khalid-spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>accessing-data-mysql-complete</name>
+	<name>khalid-spring</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

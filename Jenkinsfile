@@ -28,15 +28,17 @@ pipeline {
             }
         }
 
-        // stage('Package with Docker') {
+        stage('Package with Docker') {
 
-        //     steps {
-        //         unstash 'app' 
-        //         sh 'ls -la'
-        //         sh 'ls -la target'
-        //         sh 'docker build -t khaliddinh/springboot:1.0 .'
-        //     }
-        // }
+            steps {
+                unstash 'app' 
+                sh 'ls -la'
+                sh 'ls -la target'
+                sh 'docker build -t khaliddinh/spring-mysql .'
+                sh 'docker network create test'
+                sh 'docker container run -d --name khalid-java --network test -p 8080:8080 khaliddinh/spring-mysql'
+            }
+        }
         // stage('Pushing  to DockerHub') {
         //     steps {
         //         echo 'Start pushing.. with credential'
