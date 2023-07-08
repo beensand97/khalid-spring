@@ -5,9 +5,9 @@ pipeline {
     //     buildDiscarder logRotator(daysToKeepStr: '1', numToKeepStr: '4')
     // }
 
-    // tools { 
-    //     maven 'my-maven' 
-    // }
+    tools { 
+        maven 'my-maven' 
+    }
     // environment {
     //     DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     // }
@@ -20,11 +20,6 @@ pipeline {
         //     }
         // }
         stage('Build with Maven') {
-            agent{
-                docker {
-                    image "maven:latest"
-                }
-            }
             steps {
                 sh 'mvn --version'
                 sh 'java -version'
