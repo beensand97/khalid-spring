@@ -49,7 +49,7 @@ pipeline {
         stage('Deploy to QA server') {
             agent{
                 docker {
-                    image "khaliddinh/ansible"
+                    image 'khaliddinh/ansible'
                 }
             }
             steps {
