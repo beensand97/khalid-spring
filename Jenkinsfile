@@ -54,6 +54,7 @@ pipeline {
             }
             steps {
                 echo 'Deploying and cleaning'
+                sh 'mkdir .ssh'
                 sh 'ssh-keygen -b 2048 -t rsa -f .ssh/demo -q -N "" '
                 sh 'ls -la '
                 sh 'ls -la .ssh'
