@@ -54,9 +54,9 @@ pipeline {
             }
             steps {
                 echo 'Deploying and cleaning'
-                sh 'whoami'
-                sh 'ls -la'
-                sh 'pwd'
+                sh 'ssh-keygen -b 2048 -t rsa -f .ssh/demo -q -N "" '
+                sh 'ls -la '
+                sh 'ls -la .ssh'
                 sh 'ansible --version '
             }
         }
