@@ -54,9 +54,10 @@ pipeline {
                 }
             }
             environment {
-                HOME = '/home/ansible/'
+                HOME = '/home/ansible'
             }
             steps {
+                echo 'env'
                 echo 'Deploying and cleaning'
                 // sh 'mkdir .ssh'
                 // sh 'ssh-keygen -b 2048 -t rsa -f .ssh/demo -q -N "" '
