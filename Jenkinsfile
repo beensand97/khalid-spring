@@ -54,6 +54,9 @@ pipeline {
             }
             steps {
                 echo 'Deploying and cleaning'
+                sh 'whoami'
+                sh 'ls -la'
+                sh 'pwd'
                 sh 'ansible --version '
             }
         }
