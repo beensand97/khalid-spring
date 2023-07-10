@@ -49,6 +49,7 @@ pipeline {
         stage('Deploy to QA server') {
             agent{
                 docker {
+                    alwaysPull true
                     image 'khaliddinh/ansible'
                 }
             }
