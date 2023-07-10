@@ -7,6 +7,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+        FILE=credentials('ansible_key')
     }
     stages {
         // stage('Scan & Review with Sonar') {
@@ -38,14 +39,14 @@ pipeline {
                 sh 'docker container run -d --name khalid-java --network test -p 8081:8080 khaliddinh/mysql-spring'
             }
         }
-        stage('Pushing  to DockerHub') {
-            steps {
-                echo 'Start pushing.. with credential'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push khaliddinh/mysql-spring'
+        // stage('Pushing  to DockerHub') {
+        //     steps {
+        //         echo 'Start pushing.. with credential'
+        //         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        //         sh 'docker push khaliddinh/mysql-spring'
                 
-            }
-        }
+        //     }
+        // }
         stage('Deploy to QA server') {
             agent{
                 docker {
