@@ -57,7 +57,7 @@ pipeline {
                 sh 'ls -la '
                 sh 'ls -la .ssh'
                 sh 'ansible --version '
-                sh 'ansible all -m shell -a 'echo $HOSTNAME' '
+                sh 'ansible all -m shell -a "echo $HOSTNAME" '
             }
         }
     }
