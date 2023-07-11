@@ -8,12 +8,14 @@ import jakarta.persistence.Id;
 @Entity // This tells Hibernate to make a table out of this class
 public class User {
   @Id
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
   private String name;
 
   private String email;
+
+  private Integer age;
 
   public Integer getId() {
     return id;
@@ -37,5 +39,13 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Integer getAge() {
+    return age;
+  }
+
+  public void setAge(Integer age) {
+    this.age = age;
   }
 }
