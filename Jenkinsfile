@@ -7,7 +7,6 @@ pipeline {
     }
     environment {
         DOCKERHUB_CREDENTIALS=credentials('dockerhub')
-        FILE=credentials('ansible_key')
     }
     stages {
         // stage('Scan & Review with Sonar') {
@@ -33,40 +32,11 @@ pipeline {
                 sh 'ls -la'
                 sh 'ls -la target'
                 sh 'docker build -t khaliddinh/mysql-spring .'
-                sh 'docker network create test || echo "network exists" '
-                sh 'docker container stop khalid-java || echo "container does not exist" '
-                sh 'echo y | docker container prune '
-                sh 'docker container run -d --name khalid-java --network test -p 8081:8080 khaliddinh/mysql-spring'
+                echo 'Start pushing.. with credential'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'docker push khaliddinh/mysql-spring'
             }
         }
-        // stage('Pushing  to DockerHub') {
-        //     steps {
-        //         echo 'Start pushing.. with credential'
-        //         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-        //         sh 'docker push khaliddinh/mysql-spring'
-                
-        //     }
-        // }
-        stage('Deploy to QA server') {
-            agent{
-                docker {
-                    alwaysPull true
-                    image 'khaliddinh/ansible'
-                }
-            }
-            environment {
-                HOME = '/home/ansible'
-            }
-            steps {
-                echo 'env'
-                echo 'Deploying and cleaning'
-                // sh 'mkdir .ssh'
-                // sh 'ssh-keygen -b 2048 -t rsa -f .ssh/demo -q -N "" '
-                sh 'ls -la '
-                sh 'ls -la .ssh'
-                sh 'ansible --version '
-                sh 'ansible '
-            }
-        }
+
     }
 }
