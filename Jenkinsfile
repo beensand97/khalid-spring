@@ -35,9 +35,9 @@ pipeline {
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'docker container stop khalid-mysql || echo "this container does not exist" '
                 sh 'echo y | docker container prune '
+                sh 'docker volume rm khalid-mysql-data || echo "no volume"'
                 sh "docker run --name khalid-mysql --rm --network dev -v khalid-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
                 sh 'sleep 10'
-                sh 'ls -la'
                 sh "docker exec -i khalid-mysql mysql --user=root --password=password123_DONG < script"
             }
         }
