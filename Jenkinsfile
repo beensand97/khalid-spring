@@ -45,10 +45,10 @@ pipeline {
             steps {
                 echo 'Deploying and cleaning'
                 sh 'docker image pull khaliddinh/springboot'
-                sh 'docker container stop my-demo-springboot || echo "this container does not exist" '
+                sh 'docker container stop khalid-springboot || echo "this container does not exist" '
                 sh 'docker network create dev || echo "this network exists"'
                 sh 'echo y | docker container prune '
-                sh 'docker container run -d --rm --name my-demo-springboot -p 8081:8080 --network dev khaliddinh/springboot'
+                sh 'docker container run -d --rm --name khalid-springboot -p 8081:8080 --network dev khaliddinh/springboot'
             }
         }
  
