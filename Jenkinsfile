@@ -22,7 +22,7 @@ pipeline {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t khaliddinh/mysql-root-login .'
+                    sh 'docker build -t khaliddinh/springboot .'
                     sh 'docker push khaliddinh/springboot'
                 }
             }
