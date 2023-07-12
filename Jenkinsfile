@@ -6,37 +6,50 @@ pipeline {
         maven 'my-maven' 
     }
     environment {
-        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+        MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
     }
     stages {
-        // stage('Scan & Review with Sonar') {
-        //     steps {
-        //         withSonarQubeEnv(installationName: 'my-sonar') {
-        //             sh 'mvn clean package -Dmaven.test.failure.ignore=true sonar:sonar '
-        //         }
-        //     }
-        // }
+
         stage('Build with Maven') {
             steps {
                 sh 'mvn --version'
                 sh 'java -version'
                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
-                stash includes : 'target/*.jar', name: 'app'
             }
         }
 
-        stage('Package with Docker') {
+        stage('Packaging/Pushing imagae') {
 
             steps {
-                unstash 'app' 
-                sh 'ls -la'
-                sh 'ls -la target'
-                sh 'docker build -t khaliddinh/mysql-spring .'
-                echo 'Start pushing.. with credential'
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh 'docker push khaliddinh/mysql-spring'
+                withDockerRegistry(credentialsId: 'dockerhub') {
+                    sh 'docker build -t khaliddinh/springboot .'
+                    sh 'docker push khaliddinh/springboot'
+                }
             }
         }
 
+        stage('Deploy MySQL to DEV') {
+            steps {
+                echo 'Deploying and cleaning'
+                sh 'docker image pull mysql:8.0'
+                sh 'docker network create dev || echo "this network exists"'
+                sh 'docker container stop khalid-mysql || echo "this container does not exist" '
+                sh 'echo y | docker container prune '
+                sh "docker run --name khalid-mysql --rm --network dev -v khalid-mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_LOGIN_PSW} -e MYSQL_DATABASE=db_example  -d mysql:8.0 "
+                sh 'sleep 10'
+                sh "docker exec -i khalid-mysql mysql --user=root --password=password123_DONG < script"
+            }
+        }
+        stage('Deploy Spring Boot to DEV') {
+            steps {
+                echo 'Deploying and cleaning'
+                sh 'docker image pull khaliddinh/springboot'
+                sh 'docker container stop my-demo-springboot || echo "this container does not exist" '
+                sh 'docker network create dev || echo "this network exists"'
+                sh 'echo y | docker container prune '
+                sh 'docker container run -d --rm --name my-demo-springboot -p 8081:8080 --network dev khaliddinh/springboot'
+            }
+        }
+ 
     }
 }
