@@ -21,7 +21,7 @@ pipeline {
         stage('Packaging/Pushing imagae') {
 
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub') {
+                withDockerRegistry(credentialsId: 'dockerhub', url: 'index.docker.io/v1/') {
                     sh 'docker build -t khaliddinh/springboot .'
                     sh 'docker push khaliddinh/springboot'
                 }
