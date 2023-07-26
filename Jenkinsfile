@@ -6,7 +6,7 @@ pipeline {
         maven 'my-maven' 
     }
     environment {
-        MYSQL_ROOT_LOGIN = credentials('mysql-root-login')
+        MYSQL_ROOT_LOGIN = credentials('mysql-root-account')
     }
     stages {
 
