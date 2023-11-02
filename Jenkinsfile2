@@ -7,27 +7,26 @@ pipeline {
     }
     stages {
         stage('Building/Deploying') {
-            // when{
-            //     environment name: 'params.ACTION', value: 'Build'
-            // }
+            when{
+                environment name: 'ACTION', value: 'Build'
+            }
             steps {
-                // withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                //     sh 'docker compose up -d --build'
-                //     sh 'docker compose push'
-                // }
-                sh 'printenv'
-                sh "echo $ACTION "
+                withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
+                    sh 'docker compose up -d --build'
+                    sh 'docker compose push'
+                }
+                // sh 'printenv'
+                // sh "echo $ACTION "
             }
         }
-        // stage('Removing all') {
-        //     when{
-        //         environment name: 'params.ACTION', value: 'Remove all'
-        //     }
-        //     steps {
-        //         sh 'docker compose down -v '
-        //         sh "echo ${params.ACTION} "
-        //     }
-        // }
+        stage('Removing all') {
+            when{
+                environment name: 'ACTION', value: 'Remove all'
+            }
+            steps {
+                sh 'docker compose down -v '
+            }
+        }
     }
     post {
         // Clean after build
