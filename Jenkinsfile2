@@ -15,8 +15,6 @@ pipeline {
                     sh 'docker compose up -d --build'
                     sh 'docker compose push'
                 }
-                // sh 'printenv'
-                // sh "echo $ACTION "
             }
         }
         stage('Removing all') {
