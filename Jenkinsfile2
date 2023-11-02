@@ -5,9 +5,8 @@ pipeline {
         stage('Packaging/Pushing imagae') {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    // sh 'docker compose up -d --build'
-                    // sh 'docker compose push'
-                    sh 'ls'
+                    sh 'docker compose up -d --build'
+                    sh 'docker compose push'
                 }
             }
         }
