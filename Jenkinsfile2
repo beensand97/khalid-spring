@@ -7,16 +7,9 @@ pipeline {
 
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub', url: 'https://index.docker.io/v1/') {
-                    sh 'docker build -t khaliddinh/springboot .'
-                    sh 'docker push khaliddinh/springboot'
+                    sh 'docker compose up -d --build'
+                    sh 'docker compose push'
                 }
-            }
-        }
-
-        stage('Deploy to DEV') {
-            steps {
-                echo 'Deploying and cleaning'
-                sh 'docker compose up -d --build'
             }
         }
  
