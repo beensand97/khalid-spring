@@ -16,7 +16,7 @@ pipeline {
                 //     sh 'docker compose push'
                 // }
                 sh 'printenv'
-                sh "echo ${params.ACTION} "
+                sh "echo $ACTION "
             }
         }
         // stage('Removing all') {
