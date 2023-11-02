@@ -23,7 +23,7 @@ pipeline {
             // }
             steps {
                 // sh 'docker compose down -v '
-                sh 'echo ${params.ACTION} '
+                sh "echo ${params.ACTION} "
             }
         }
     }
