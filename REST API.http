@@ -1,0 +1,8 @@
+GET http://localhost:81/java
+
+###
+
+POST http://localhost:8082/demo/add?name=khalid_dinh&email=beensand97@gmail.com&age=21
+###
+
+POST http://localhost:8082/demo/add?name=dinhlehoang&email=beensand97@gmail.com&age=23
